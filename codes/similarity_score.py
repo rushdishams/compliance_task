@@ -12,7 +12,8 @@ Returns:
     Pandas dataframe: Contains augmentations and their similarities with original.
 """
 def get_sim_score(df):
-    vectorizer = CountVectorizer() # TfIdf Vectorizer can be used as well
+    # Counting words, bigrams and trigrams
+    vectorizer = CountVectorizer(ngram_range=(1,3)) # TfIdf Vectorizer can be used as well
     aug_vec = vectorizer.fit_transform(df['aug_cleaned'])
     orig_vec = vectorizer.transform(df.iloc[:1]['orig_cleaned']) # We only need one original sentence
     df['sim_scores'] = cosine_similarity(orig_vec, aug_vec).flatten() # Flatten to fit in a column
